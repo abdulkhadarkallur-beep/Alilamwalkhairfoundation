@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donations - Al-Ilam Wal Khair Foundation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .nav-link:hover { color: #2563eb; transition: color 0.3s ease; }
+        .brand-logo {
+            width: 72px;
+            height: 72px;
+            object-fit: contain;
+        }
+        .hero-gradient { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .donation-card { transition: transform 0.3s ease; }
+        .donation-card:hover { transform: scale(1.05); }
+    </style>
+</head>
+<body class="font-sans text-gray-800">
+    <!-- Donation Modal -->
+    <div id="donation-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-8 relative">
+            <button id="close-modal-btn" class="absolute top-2 right-2 text-gray-500 hover:text-red-600 text-2xl">&times;</button>
+            <h3 class="text-2xl font-bold mb-6 text-center">Donate Now</h3>
+            <form id="donation-form" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-bold mb-2">Your Name</label>
+                    <input name="name" type="text" required class="w-full border-2 border-gray-300 rounded-lg p-3 focus:outline-none focus:border-blue-500" placeholder="Enter your name">
+                </div>
+                <div>
+                    <label class="block text-sm font-bold mb-2">Your Phone</label>
+                    <input name="phone" type="tel" required class="w-full border-2 border-gray-300 rounded-lg p-3 focus:outline-none focus:border-blue-500" placeholder="Enter your phone number">
+                </div>
+                <div>
+                    <label class="block text-sm font-bold mb-2">Your Email</label>
+                    <input name="email" type="email" required class="w-full border-2 border-gray-300 rounded-lg p-3 focus:outline-none focus:border-blue-500" placeholder="Enter your email">
+                </div>
+                <div>
+                    <label class="block text-sm font-bold mb-2">Your Adhar/PAN/Voter number</label>
+                    <input name="idnum" type="text" class="w-full border-2 border-gray-300 rounded-lg p-3 focus:outline-none focus:border-blue-500" placeholder="Enter your Adhar/PAN/Voter number">
+                </div>
+                <div>
+                    <label class="block text-sm font-bold mb-2">Amount (₹)</label>
+                    <input name="amount" type="number" required min="1" class="w-full border-2 border-gray-300 rounded-lg p-3 focus:outline-none focus:border-blue-500" placeholder="Enter amount">
+                </div>
+                <button type="submit" class="w-full bg-blue-600 text-white py-3 rounded-lg font-bold hover:bg-blue-700">Donate</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- QR Code Modal -->
+    <div id="qrModal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.5); z-index:99999; justify-content:center; align-items:center; display:flex;">
+      <div style="background:#fff; padding:24px; border-radius:8px; text-align:center; max-width:90vw; max-height:90vh; overflow:auto;">
+        <h2 class="text-2xl font-bold mb-4">Scan to Donate</h2>
+        <img src="phonepe-qr.png" alt="QR Code" style="max-width:300px; width:100%; margin:auto;">
+        <br>
+        <button onclick="closeQRModal()" style="margin-top:16px; padding:8px 24px; background:#2563eb; color:#fff; border-radius:6px;">Close</button>
+      </div>
+    </div>
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <img src="foundation-logo.png?v=2" alt="ALILM WALKHAYR FOUNDATION Logo" class="brand-logo">
+                <div class="leading-tight">
+                    <h1 class="text-2xl font-bold">ALILM WALKHAYR FOUNDATION</h1>
+                    <p class="text-xs font-semibold text-gray-500 tracking-wide">Foundation</p>
+                </div>
+            </div>
+            <div class="hidden md:flex gap-6">
+                <a href="alilam.html" class="nav-link font-semibold">Home</a>
+                <a href="about.html" class="nav-link font-semibold">About Us</a>
+                <a href="services.html" class="nav-link font-semibold">Services</a>
+                <a href="learning.html" class="nav-link font-semibold">Learning</a>
+                <a href="jobs.html" class="nav-link font-semibold">Jobs</a>
+                <a href="donations.html" class="nav-link font-semibold text-red-500">Donate</a>
+            </div>
+            <button id="menu-btn" class="md:hidden"><i class="fas fa-bars text-2xl"></i></button>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden bg-gray-100 p-4">
+            <a href="alilam.html" class="block py-2">Home</a>
+            <a href="about.html" class="block py-2">About Us</a>
+            <a href="services.html" class="block py-2">Services</a>
+            <a href="learning.html" class="block py-2">Learning</a>
+            <a href="jobs.html" class="block py-2">Jobs</a>
+            <a href="donations.html" class="block py-2 text-red-500">Donate</a>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero-gradient text-white py-16">
+        <div class="max-w-6xl mx-auto px-4 text-center">
+            <h2 class="text-4xl font-bold">Make a Difference</h2>
+            <p class="text-xl mt-4">Your donation helps us provide education, healthcare, and hope to those in need</p>
+        </div>
+    </section>
+
+    <!-- Featured Cases Section -->
+    <section class="py-16 bg-white">
+        <div class="max-w-6xl mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12">People We're Helping</h2>
+            <div id="cases-display" class="grid gap-8">
+                <!-- Cases will load here -->
+                <div class="text-center py-8">
+                    <p class="text-gray-600">Loading cases...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Donation Impact -->
+    <section class="py-16 bg-gray-50">
+        <div class="max-w-6xl mx-auto px-4">
+            <h3 class="text-3xl font-bold text-center mb-12">Your Impact Matters</h3>
+            <div class="grid md:grid-cols-4 gap-6">
+                <div class="bg-white p-6 rounded-lg shadow-lg text-center">
+                    <h4 class="text-2xl font-bold text-green-600 mb-2">₹500</h4>
+                    <p class="text-gray-700">Provides school supplies for one child</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-lg text-center">
+                    <h4 class="text-2xl font-bold text-blue-600 mb-2">₹1,000</h4>
+                    <p class="text-gray-700">Medical checkup & vitamins for 5 children</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-lg text-center">
+                    <h4 class="text-2xl font-bold text-purple-600 mb-2">₹2,000</h4>
+                    <p class="text-gray-700">One month of vocational training for a youth</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-lg text-center">
+                    <h4 class="text-2xl font-bold text-red-600 mb-2">₹5,000</h4>
+                    <p class="text-gray-700">Healthcare program for a community</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Donation Methods -->
+    <section class="py-16">
+        <div class="max-w-6xl mx-auto px-4">
+            <h3 class="text-3xl font-bold text-center mb-12">Ways to Donate</h3>
+            <div class="grid md:grid-cols-2 gap-8 mb-12">
+
+                <!-- QR Code Donation -->
+                <div class="donation-card bg-white p-8 rounded-lg shadow-lg text-center border-t-4 border-purple-500">
+                    <i class="fas fa-qrcode text-5xl text-purple-500 mb-4"></i>
+                    <h4 class="text-2xl font-bold mb-4">Scan to Donate</h4>
+                    <p class="text-gray-700 mb-6">Scan this QR code to donate instantly.</p>
+                    <div class="flex flex-col items-center gap-4">
+                        <img id="donations-qr-image" src="phonepe-qr.png" alt="Donation QR Code" class="w-56 h-56 object-contain rounded-lg border">
+                        <div class="text-lg font-bold text-gray-800">
+                            PhonePe Number: <a id="donations-phone-link" href="tel:8050732073" class="text-purple-600 hover:text-purple-700">8050732073</a>
+                        </div>
+                    </div>
+                    <p class="text-xs text-gray-500 mt-4">If the QR doesn't load, ensure the image is saved as <strong>phonepe-qr.png</strong> in this folder.</p>
+                </div>
+
+                <!-- Bank Details Donation -->
+                <div class="donation-card bg-white p-8 rounded-lg shadow-lg text-center border-t-4 border-green-600">
+                    <i class="fas fa-university text-5xl text-green-600 mb-4"></i>
+                    <h4 class="text-2xl font-bold mb-4">Bank Transfer</h4>
+                    <div class="text-lg text-gray-800 mb-2 font-semibold">Account Name: <span class="font-bold">ALILM WALKHAYR FOUNDATION</span></div>
+                    <div class="text-lg text-gray-800 mb-2 font-semibold">Account Number: <span class="font-bold">309721010000066</span></div>
+                    <div class="text-lg text-gray-800 mb-2 font-semibold">IFSC Code: <span class="font-bold">UBIN0930971</span></div>
+                    <p class="text-gray-600 mt-6">You can donate directly via bank transfer using the above details. Thank you for your support!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Donation Amounts -->
+    <section class="py-16 bg-gray-50">
+        <div class="max-w-2xl mx-auto px-4">
+            <h3 class="text-3xl font-bold text-center mb-12">Choose Your Donation Amount</h3>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                <button class="donation-card bg-white border-2 border-gray-300 p-4 rounded-lg font-bold hover:border-purple-600 hover:bg-purple-50">
+                    ₹500
+                </button>
+                <button class="donation-card bg-white border-2 border-gray-300 p-4 rounded-lg font-bold hover:border-purple-600 hover:bg-purple-50">
+                    ₹1,000
+                </button>
+                <button class="donation-card bg-white border-2 border-gray-300 p-4 rounded-lg font-bold hover:border-purple-600 hover:bg-purple-50">
+                    ₹2,000
+                </button>
+                <button class="donation-card bg-white border-2 border-gray-300 p-4 rounded-lg font-bold hover:border-purple-600 hover:bg-purple-50">
+                    ₹5,000
+                </button>
+                <button class="donation-card bg-white border-2 border-gray-300 p-4 rounded-lg font-bold hover:border-purple-600 hover:bg-purple-50">
+                    ₹10,000
+                </button>
+                <button class="donation-card bg-white border-2 border-gray-300 p-4 rounded-lg font-bold hover:border-purple-600 hover:bg-purple-50">
+                    ₹25,000
+                </button>
+                <button class="donation-card bg-white border-2 border-gray-300 p-4 rounded-lg font-bold hover:border-purple-600 hover:bg-purple-50">
+                    ₹50,000
+                </button>
+                <button class="donation-card bg-white border-2 border-gray-300 p-4 rounded-lg font-bold hover:border-purple-600 hover:bg-purple-50">
+                    Custom
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Monthly Giving -->
+    <section class="hero-gradient text-white py-16">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <h3 class="text-3xl font-bold mb-4">Become a Monthly Donor</h3>
+            <p class="text-lg mb-8">
+                Your monthly contribution provides consistent, long-term support for our programs. 
+                Even small amounts make a significant difference over time.
+            </p>
+            <button class="bg-white text-purple-600 px-8 py-3 rounded-lg font-bold hover:bg-gray-100">
+                Set Up Monthly Giving
+            </button>
+        </div>
+    </section>
+
+    <!-- Transparency -->
+    <section class="py-16">
+        <div class="max-w-6xl mx-auto px-4">
+            <h3 class="text-3xl font-bold text-center mb-12">Transparency & Trust</h3>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="text-center">
+                    <i class="fas fa-chart-pie text-4xl text-blue-500 mb-4"></i>
+                    <h4 class="text-xl font-bold mb-2">How Your Money Is Used</h4>
+                    <ul class="text-gray-700 text-sm space-y-2">
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>70% Programs</li>
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>15% Admin</li>
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>15% Fundraising</li>
+                    </ul>
+                </div>
+                <div class="text-center">
+                    <i class="fas fa-lock text-4xl text-green-500 mb-4"></i>
+                    <h4 class="text-xl font-bold mb-2">Your Privacy</h4>
+                    <p class="text-gray-700 text-sm">
+                        We protect your personal information and never share it with third parties. 
+                        All transactions are secure and encrypted.
+                    </p>
+                </div>
+                <div class="text-center">
+                    <i class="fas fa-award text-4xl text-purple-500 mb-4"></i>
+                    <h4 class="text-xl font-bold mb-2">Tax Benefits</h4>
+                    <p class="text-gray-700 text-sm">
+                        We are a registered non-profit organization. Your donation may be tax-deductible. 
+                        Ask for a receipt!
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-8">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="grid md:grid-cols-3 gap-8 mb-8">
+                <div>
+                    <h5 class="text-xl font-bold mb-4">Al-Ilam Wal Khair</h5>
+                    <p class="text-gray-400">Help us make a difference.</p>
+                </div>
+                <div>
+                    <h5 class="text-xl font-bold mb-4">Contact</h5>
+                    <ul class="text-gray-400 space-y-2 text-sm">
+                        <li>Email: donate@alifoundation.org</li>
+                        <li>Phone: +1 (XXX) XXX-XXXX</li>
+                        <li>Address: [Your Address]</li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="text-xl font-bold mb-4">Follow Us</h5>
+                    <div class="flex gap-4">
+                        <a href="#" class="hover:text-blue-400"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="hover:text-blue-400"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="hover:text-blue-400"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr class="border-gray-700 mb-4">
+            <p class="text-center text-gray-400">© 2024 Al-Ilam Wal Khair Foundation. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="config.js?v=2"></script>
+    <script>
+        // Load cases from admin panel
+        document.addEventListener('DOMContentLoaded', function() {
+            const cases = CONFIG.getCases();
+            const org = CONFIG.getOrganization();
+            // Display all cases
+            const casesDisplay = document.getElementById('cases-display');
+            if (cases.length === 0) {
+                casesDisplay.innerHTML = `
+                    <div class="text-center py-12">
+                        <i class="fas fa-info-circle text-4xl text-gray-400 mb-4"></i>
+                        <p class="text-gray-600 text-lg">No cases available at the moment. Check back soon!</p>
+                    </div>
+                `;
+            } else {
+                casesDisplay.innerHTML = cases.map(caseItem => {
+                    const progress = (caseItem.amountRaised / caseItem.amountNeeded) * 100;
+                    const remaining = caseItem.amountNeeded - caseItem.amountRaised;
+                    const urgencyColor = caseItem.urgency === 'Critical' ? 'bg-red-500' : 
+                                        caseItem.urgency === 'High' ? 'bg-orange-500' : 
+                                        caseItem.urgency === 'Medium' ? 'bg-yellow-500' : 'bg-green-500';
+                    return `
+                        <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+                            <div class="grid md:grid-cols-3 gap-6 p-6">
+                                <!-- Image -->
+                                <div class="md:col-span-1">
+                                    <img src="${caseItem.image}" alt="${caseItem.name}" class="w-full h-64 object-cover rounded-lg">
+                                </div>
+                                <!-- Details -->
+                                <div class="md:col-span-2">
+                                    <div class="flex items-start justify-between mb-4">
+                                        <div>
+                                            <h3 class="text-2xl font-bold mb-2">${caseItem.name}</h3>
+                                            <div class="flex gap-2 items-center">
+                                                <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-semibold">${caseItem.category}</span>
+                                                <span class="${urgencyColor} text-white px-3 py-1 rounded-full text-xs font-bold">${caseItem.urgency}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p class="text-gray-700 mb-6 line-clamp-3">${caseItem.description}</p>
+                                    <!-- Funding Progress -->
+                                    <div class="mb-6">
+                                        <div class="flex justify-between mb-2">
+                                            <span class="font-semibold">Funding Progress</span>
+                                            <span class="font-bold text-green-600">${Math.round(progress)}%</span>
+                                        </div>
+                                        <div class="w-full bg-gray-300 rounded-full h-3">
+                                            <div class="bg-green-500 h-3 rounded-full" style="width: ${Math.min(progress, 100)}%"></div>
+                                        </div>
+                                        <div class="flex justify-between mt-2 text-sm text-gray-600">
+                                            <span>Raised: ₹${caseItem.amountRaised.toLocaleString('en-IN')}</span>
+                                            <span>Goal: ₹${caseItem.amountNeeded.toLocaleString('en-IN')}</span>
+                                            <span class="${remaining > 0 ? 'text-orange-600' : 'text-green-600'} font-bold">
+                                                ${remaining > 0 ? `₹${remaining.toLocaleString('en-IN')} needed` : 'Goal Reached! ✓'}
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <!-- Donate Button -->
+                                    <button class="bg-blue-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-blue-700 w-full donate-now-btn">
+                                        <i class="fas fa-heart mr-2"></i>Donate Now
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+            // Update donations QR & phone
+            const donationsPage = CONFIG.getPage('donations');
+            if (donationsPage) {
+                const qrImage = document.getElementById('donations-qr-image');
+                const phoneLink = document.getElementById('donations-phone-link');
+                if (qrImage && donationsPage.qrImage) {
+                    qrImage.src = donationsPage.qrImage;
+                }
+                if (phoneLink && donationsPage.donationPhone) {
+                    const phoneValue = donationsPage.donationPhone;
+                    phoneLink.textContent = phoneValue;
+                    phoneLink.href = `tel:${phoneValue.replace(/[^0-9+]/g, '')}`;
+                }
+            }
+            // Update footer with organization info
+            const footerContact = document.querySelector('footer .grid');
+            const contactDiv = footerContact.querySelector('div:nth-child(2)');
+            if (contactDiv) {
+                const contactList = contactDiv.querySelector('ul');
+                if (contactList) {
+                    contactList.innerHTML = `
+                        <li>Email: <a href=\"mailto:${org.email}\" class=\"hover:text-blue-400\">${org.email}</a></li>
+                        <li>Phone: <a href=\"tel:${org.phone.replace(/[^0-9+]/g, '')}\" class=\"hover:text-blue-400\">${org.phone}</a></li>
+                        <li>Address: ${org.address}</li>
+                    `;
+                }
+            }
+            // Modal logic
+            function openDonationModal() {
+                document.getElementById('donation-modal').classList.remove('hidden');
+            }
+            function closeDonationModal() {
+                document.getElementById('donation-modal').classList.add('hidden');
+            }
+            document.body.addEventListener('click', function(e) {
+                if (e.target.classList.contains('donate-now-btn')) {
+                    openDonationModal();
+                }
+            });
+            document.getElementById('close-modal-btn').addEventListener('click', closeDonationModal);
+            document.getElementById('donation-modal').addEventListener('click', function(e) {
+                if (e.target === this) closeDonationModal();
+            });
+            document.getElementById('donation-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                // Get form values
+                const name = document.querySelector('#donation-form input[name="name"]').value.trim();
+                const phone = document.querySelector('#donation-form input[name="phone"]').value.trim();
+                const email = document.querySelector('#donation-form input[name="email"]').value.trim();
+                const idnum = document.querySelector('#donation-form input[name="idnum"]').value.trim();
+                const amount = document.querySelector('#donation-form input[name="amount"]').value.trim();
+                if (!name || !phone || !email || !amount || isNaN(amount) || Number(amount) <= 0) {
+                    alert('Please fill all required fields and enter a valid amount.');
+                    return;
+                }
+                // Save to localStorage
+                const donationData = { name, phone, email, idnum, amount, date: new Date().toISOString() };
+                let donations = JSON.parse(localStorage.getItem('donations') || '[]');
+                donations.push(donationData);
+                localStorage.setItem('donations', JSON.stringify(donations));
+                // Show QR modal
+                closeDonationModal();
+                var qrModal = document.getElementById('qrModal');
+                qrModal.style.display = 'flex';
+                qrModal.style.justifyContent = 'center';
+                qrModal.style.alignItems = 'center';
+                qrModal.style.flexDirection = 'row';
+            });
+            // QR modal close function
+            window.closeQRModal = function() {
+                document.getElementById('qrModal').style.display = 'none';
+            }
+        });
+    </script>
+
+    <script>
+        document.getElementById('menu-btn').addEventListener('click', function() {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ALILM WALKHAYR FOUNDATION - Home</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Recent Posts Slider Styles */
+        .recent-slider {
+            position: relative;
+            overflow: hidden;
+            background: #f9fafb;
+            border-radius: 1rem;
+            margin: 2rem auto 0 auto;
+            max-width: 900px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+        }
+        .recent-slider-track {
+            display: flex;
+            transition: transform 0.6s cubic-bezier(.4,0,.2,1);
+        }
+        .recent-slide {
+            min-width: 100%;
+            box-sizing: border-box;
+            padding: 2rem 2rem 1.5rem 2rem;
+            text-align: left;
+        }
+        .recent-slide h4 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        .recent-slide .recent-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #6366f1;
+            text-transform: uppercase;
+            margin-bottom: 0.25rem;
+            display: inline-block;
+        }
+        .recent-slide p {
+            color: #374151;
+            margin-bottom: 0.75rem;
+        }
+        .recent-slide a {
+            color: #4f46e5;
+            font-weight: 600;
+            text-decoration: underline;
+        }
+        .recent-slider-nav {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+            pointer-events: none;
+        }
+        .recent-slider-btn {
+            background: #fff;
+            border: 1px solid #e5e7eb;
+            border-radius: 50%;
+            width: 2.5rem;
+            height: 2.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            color: #6366f1;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+            pointer-events: auto;
+            transition: background 0.2s;
+        }
+        .recent-slider-btn:hover {
+            background: #f3f4f6;
+        }
+        .recent-slider-dots {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        .recent-slider-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #d1d5db;
+            cursor: pointer;
+        }
+        .recent-slider-dot.active {
+            background: #6366f1;
+        }
+        .nav-link:hover {
+            color: #2563eb;
+            transition: color 0.3s ease;
+        }
+        .brand-logo {
+            width: 72px;
+            height: 72px;
+            object-fit: contain;
+        }
+        .hero-gradient {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .card-hover {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: transform 0.3s ease;
+        }
+        .btn-primary:hover {
+            transform: scale(1.05);
+        }
+        .floating-notification {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            width: 360px;
+            max-width: calc(100vw - 40px);
+            z-index: 1000;
+        }
+        .notif-card {
+            background: #ffffff;
+            border-radius: 14px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.18);
+            overflow: hidden;
+            border-left: 6px solid #6366f1;
+        }
+        .notif-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 14px;
+            background: #f3f4f6;
+            font-weight: 700;
+        }
+        .notif-close {
+            border: none;
+            background: transparent;
+            font-size: 18px;
+            cursor: pointer;
+            color: #6b7280;
+        }
+        .notif-item {
+            padding: 12px 14px;
+            border-top: 1px solid #e5e7eb;
+        }
+        .notif-label {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: #6b7280;
+        }
+        .notif-title {
+            font-size: 16px;
+            font-weight: 700;
+            margin-top: 4px;
+            color: #111827;
+        }
+        .notif-desc {
+            font-size: 13px;
+            color: #4b5563;
+            margin-top: 4px;
+        }
+        .notif-link {
+            display: inline-block;
+            margin-top: 8px;
+            font-weight: 600;
+            color: #4f46e5;
+            text-decoration: none;
+        }
+        .notif-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body class="font-sans text-gray-800">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <img src="foundation-logo.png?v=2" alt="ALILM WALKHAYR FOUNDATION Logo" class="brand-logo">
+                <div class="leading-tight">
+                    <h1 class="text-2xl font-bold text-gray-800">ALILM WALKHAYR FOUNDATION</h1>
+                    <p class="text-xs font-semibold text-gray-500 tracking-wide">Foundation</p>
+                </div>
+            </div>
+            <div class="hidden md:flex gap-6">
+                <a href="alilam.html" class="nav-link font-semibold">Home</a>
+                <a href="about.html" class="nav-link font-semibold">About Us</a>
+                <a href="services.html" class="nav-link font-semibold">Services</a>
+                <a href="learning.html" class="nav-link font-semibold">Learning</a>
+                <a href="jobs.html" class="nav-link font-semibold">Jobs</a>
+                <a href="donations.html" class="nav-link font-semibold text-red-500">Donate</a>
+                <a href="admin.html" class="nav-link font-semibold text-purple-600"><i class="fas fa-lock mr-1"></i>Admin</a>
+            </div>
+            <button id="menu-btn" class="md:hidden text-gray-800">
+                <i class="fas fa-bars text-2xl"></i>
+            </button>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-gray-100 p-4">
+            <a href="alilam.html" class="block py-2 nav-link">Home</a>
+            <a href="about.html" class="block py-2 nav-link">About Us</a>
+            <a href="services.html" class="block py-2 nav-link">Services</a>
+            <a href="learning.html" class="block py-2 nav-link">Learning</a>
+            <a href="jobs.html" class="block py-2 nav-link">Jobs</a>
+            <a href="donations.html" class="block py-2 nav-link text-red-500">Donate</a>
+            <hr class="my-2 border-gray-300">
+            <a href="admin.html" class="block py-2 nav-link text-purple-600 font-bold"><i class="fas fa-lock mr-1"></i>Admin Panel</a>
+    </nav>
+
+
+    <!-- Hero Section -->
+    <section class="hero-gradient text-white py-20">
+        <div class="max-w-6xl mx-auto px-4 text-center">
+            <h2 class="text-5xl font-bold mb-4">Welcome to ALILM WALKHAYR FOUNDATION</h2>
+            <p class="text-xl mb-8">Empowering Lives Through Education, Healthcare & Community Service</p>
+            <a href="donations.html" class="btn-primary text-white px-8 py-3 rounded-lg font-bold inline-block">Make a Difference Today</a>
+        </div>
+    </section>
+
+    <!-- Recent Posts Carousel -->
+    <section class="py-16">
+        <div class="max-w-6xl mx-auto px-4">
+            <h3 class="text-3xl font-bold text-center mb-12">Recent Posts</h3>
+            <div class="relative">
+                <div id="recent-carousel-track" class="flex transition-transform duration-500 ease-in-out" style="will-change: transform;"></div>
+                <button id="recent-carousel-prev" class="recent-slider-btn absolute left-0 top-1/2 -translate-y-1/2 z-10" aria-label="Previous"><i class="fas fa-chevron-left"></i></button>
+                <button id="recent-carousel-next" class="recent-slider-btn absolute right-0 top-1/2 -translate-y-1/2 z-10" aria-label="Next"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Foundation Description -->
+    <section class="py-16 bg-gray-50">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="grid md:grid-cols-2 gap-8 items-center">
+                <div>
+                    <h3 class="text-3xl font-bold mb-4">About Our Foundation</h3>
+                    <p class="text-lg text-gray-700 mb-4">
+                        ALILM WALKHAYR FOUNDATION is a non-profit organization committed to promoting knowledge and goodness in society.<br>
+                        Our aim is to provide both worldly education for all.<br>
+                        We work to support the poor, needy, and underprivileged in every possible way.<br>
+                        Through educational and charitable initiatives, we strive to uplift communities.<br>
+                        Our mission is to spread light through knowledge and serve humanity with compassion.
+                    </p>
+                    <p class="text-lg text-gray-700 mb-6">
+                        Our mission is to provide hope and opportunities to those in need, while building a stronger, 
+                        more compassionate society for future generations.
+                    </p>
+                    <a href="about.html" class="btn-primary text-white px-6 py-2 rounded-lg font-bold inline-block">Learn More</a>
+                </div>
+                <div class="bg-gray-300 rounded-lg overflow-hidden shadow-lg h-96">
+                    <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=500&h=400&fit=crop" alt="Foundation Team" class="w-full h-full object-cover">
+                <!-- Recent Posts Carousel Script -->
+                <script>
+                function getRecentPosts() {
+                    let data = null;
+                    try {
+                        const stored = localStorage.getItem('alIlamKhairConfig');
+                        if (stored) {
+                            data = JSON.parse(stored);
+                        }
+                    } catch (e) { data = null; }
+                    if (!data && typeof CONFIG !== 'undefined') {
+                        data = CONFIG.DEFAULT_DATA;
+                    }
+                    if (!data) return [];
+                    const posts = [];
+                    // Donate (cases) first
+                    (data.cases || []).slice(-3).reverse().forEach(item => {
+                        posts.push({
+                            label: 'Donate',
+                            title: item.name,
+                            description: item.description,
+                            image: item.image,
+                            link: 'donations.html'
+                        });
+                    });
+                    // Learning
+                    (data.learningPrograms || []).slice(-3).reverse().forEach(item => {
+                        posts.push({
+                            label: 'Learning',
+                            title: item.title,
+                            description: item.description,
+                            image: item.image || 'https://images.unsplash.com/photo-1509062522246-3755977927d7?w=400&h=300&fit=crop',
+                            link: 'learning.html'
+                        });
+                    });
+                    // Jobs
+                    (data.jobOpenings || []).slice(-3).reverse().forEach(item => {
+                        posts.push({
+                            label: 'Job',
+                            title: item.title,
+                            description: item.description,
+                            image: item.image || 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=400&h=300&fit=crop',
+                            link: 'jobs.html'
+                        });
+                    });
+                    return posts;
+                }
+
+                function renderRecentCarousel() {
+                    const posts = getRecentPosts();
+                    const track = document.getElementById('recent-carousel-track');
+                    const prevBtn = document.getElementById('recent-carousel-prev');
+                    const nextBtn = document.getElementById('recent-carousel-next');
+                    if (!track || !prevBtn || !nextBtn) return;
+                    const cardsPerSlide = 3;
+                    const slides = [];
+                    for (let i = 0; i < posts.length; i += cardsPerSlide) {
+                        slides.push(posts.slice(i, i + cardsPerSlide));
+                    }
+                    let current = 0;
+                    function renderSlide(idx) {
+                        track.innerHTML = '';
+                        slides[idx].forEach(post => {
+                            const card = document.createElement('div');
+                            card.className = 'card-hover rounded-lg overflow-hidden shadow-lg bg-white flex flex-col mx-2 w-full';
+                            card.style.maxWidth = '270px';
+                            card.style.minWidth = '270px';
+                            card.querySelectorAll && card.querySelectorAll('img').forEach(img => {
+                                img.style.height = '170px';
+                            });
+                            card.innerHTML = `
+                                <img src="${post.image}" alt="${post.title}" class="w-full h-64 object-cover">
+                                <div class="p-4 flex-1 flex flex-col">
+                                    <div class="recent-label mb-1">${post.label}</div>
+                                    <h4 class="text-xl font-bold mb-2">${post.title}</h4>
+                                    <p class="text-gray-700 flex-1">${post.description}</p>
+                                    <a href="${post.link}" class="recent-link mt-2">View details</a>
+                                </div>
+                            `;
+                            track.appendChild(card);
+                        });
+                        // Center the cards
+                        track.style.justifyContent = 'center';
+                    }
+                    function updateSlide(newIdx) {
+                        current = (newIdx + slides.length) % slides.length;
+                        renderSlide(current);
+                        // Auto-slide
+                        let autoSlide = setInterval(() => {
+                            updateSlide(current + 1);
+                        }, 5000);
+                        track.onmouseenter = () => clearInterval(autoSlide);
+                        track.onmouseleave = () => autoSlide = setInterval(() => {
+                            updateSlide(current + 1);
+                        }, 3500);
+                    }
+                    prevBtn.onclick = () => updateSlide(current - 1);
+                    nextBtn.onclick = () => updateSlide(current + 1);
+                    renderSlide(current);
+                }
+                document.addEventListener('DOMContentLoaded', renderRecentCarousel);
+                </script>
+        window.addEventListener('pageshow', renderLatestUpdates);
+        window.addEventListener('focus', renderLatestUpdates);
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) {
+                renderLatestUpdates();
+            }
+        });
+    </script>
+
+    <!-- Recent Posts Slider Script -->
+    <script>
+    function getRecentPosts() {
+        let data = null;
+        try {
+            const stored = localStorage.getItem('alIlamKhairConfig');
+            if (stored) {
+                data = JSON.parse(stored);
+            }
+        } catch (e) { data = null; }
+        if (!data && typeof CONFIG !== 'undefined') {
+            data = CONFIG.DEFAULT_DATA;
+        }
+        if (!data) return [];
+        const posts = [];
+        // Donate (cases) first
+        (data.cases || []).slice(-3).reverse().forEach(item => {
+            posts.push({
+                label: 'Donate',
+                title: item.name,
+                description: item.description,
+                image: item.image,
+                link: 'donations.html'
+            });
+        });
+        // Learning
+        (data.learningPrograms || []).slice(-3).reverse().forEach(item => {
+            posts.push({
+                label: 'Learning',
+                title: item.title,
+                description: item.description,
+                image: item.image,
+                link: 'learning.html'
+            });
+        });
+        // Jobs
+        (data.jobOpenings || []).slice(-3).reverse().forEach(item => {
+            posts.push({
+                label: 'Job',
+                title: item.title,
+                description: item.description,
+                image: item.image,
+                link: 'jobs.html'
+            });
+        });
+        return posts;
+    }
+
+    function renderRecentSlider() {
+        const posts = getRecentPosts();
+        const track = document.getElementById('recent-slider-track');
+        const dots = document.getElementById('recent-slider-dots');
+        if (!track || !dots) return;
+        track.innerHTML = '';
+        dots.innerHTML = '';
+        posts.forEach((post, idx) => {
+            const slide = document.createElement('div');
+            slide.className = 'recent-slide';
+            let imgSrc = post.image;
+            if (!imgSrc) {
+                if (post.label === 'Learning') {
+                    imgSrc = 'https://images.unsplash.com/photo-1509062522246-3755977927d7?w=400&h=300&fit=crop';
+                } else if (post.label === 'Job') {
+                    imgSrc = 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=400&h=300&fit=crop';
+                }
+            }
+            slide.innerHTML = `
+                ${imgSrc ? `<img src="${imgSrc}" alt="${post.title}" style="max-width:100%;max-height:220px;border-radius:12px;margin-bottom:1rem;">` : ''}
+                <div class="recent-label">${post.label}</div>
+                <h4>${post.title}</h4>
+                <p>${post.description}</p>
+                <a href="${post.link}">View details</a>
+            `;
+            track.appendChild(slide);
+            const dot = document.createElement('div');
+            dot.className = 'recent-slider-dot' + (idx === 0 ? ' active' : '');
+            dot.setAttribute('data-idx', idx);
+            dots.appendChild(dot);
+        });
+        let current = 0;
+        function updateSlider(idx) {
+            current = idx;
+            track.style.transform = `translateX(-${idx * 100}%)`;
+            Array.from(dots.children).forEach((d, i) => {
+                d.classList.toggle('active', i === idx);
+            });
+        }
+        document.getElementById('recent-slider-prev').onclick = () => {
+            updateSlider((current - 1 + posts.length) % posts.length);
+        };
+        document.getElementById('recent-slider-next').onclick = () => {
+            updateSlider((current + 1) % posts.length);
+        };
+        Array.from(dots.children).forEach((d, i) => {
+            d.onclick = () => updateSlider(i);
+        });
+        // Auto-slide
+        let autoSlide = setInterval(() => {
+            updateSlider((current + 1) % posts.length);
+        }, 5000);
+        track.onmouseenter = () => clearInterval(autoSlide);
+        track.onmouseleave = () => autoSlide = setInterval(() => {
+            updateSlider((current + 1) % posts.length);
+        }, 5000);
+    }
+    document.addEventListener('DOMContentLoaded', renderRecentSlider);
+    </script>
+</body>
+</html>
