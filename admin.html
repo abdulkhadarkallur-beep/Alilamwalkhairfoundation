@@ -165,10 +165,29 @@
                 </div>
             </div>
 
-            <!-- Home Page Tab -->
-            <div id="home-content" class="tab-content hidden">
-                <!-- Home page content goes here -->
-            </div>
+                        <!-- Home Page Tab -->
+                        <div id="home-content" class="tab-content hidden">
+                            <div class="bg-white p-8 rounded-lg shadow-lg">
+                                <h3 class="text-2xl font-bold mb-6">Home Page Content</h3>
+                                <div class="grid gap-6">
+                                    <div>
+                                        <label class="block text-sm font-bold mb-2">Hero Title</label>
+                                        <input type="text" id="home-title" class="w-full border-2 border-gray-300 rounded-lg p-3 focus:outline-none focus:border-blue-500">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-bold mb-2">Hero Subtitle</label>
+                                        <input type="text" id="home-subtitle" class="w-full border-2 border-gray-300 rounded-lg p-3 focus:outline-none focus:border-blue-500">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-bold mb-2">Description</label>
+                                        <textarea id="home-description" rows="3" class="w-full border-2 border-gray-300 rounded-lg p-3 focus:outline-none focus:border-blue-500"></textarea>
+                                    </div>
+                                    <button onclick="savePage('home')" class="bg-green-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-green-700">
+                                        <i class="fas fa-save mr-2"></i>Save Home Page
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
 
             <!-- Services Page Tab -->
                         <!-- About Page Tab -->
