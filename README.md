@@ -26,13 +26,15 @@ A professional, modern website for Al-Ilam Wal Khair Foundation built with HTML5
 ### Open in Browser
 Simply double-click any HTML file to open it in your default browser.
 
-### Use a Local Server (Recommended)
-```bash
-# Windows: Open Command Prompt in the folder and run:
-python -m http.server 8000
 
-# Then visit: http://localhost:8000
-```
+### How Admin Data is Stored
+All admin panel changes (cases, jobs, home content, etc.) are saved in your browser's localStorage. This works on GitHub Pages and any static hosting—no server or localhost required.
+
+**Note:**
+- Data is only available in the browser/device where you made the changes.
+- Other users or devices will not see your changes unless you export/import data manually.
+
+If you want to test the site locally, you can still use a local server (e.g., `python -m http.server 8000`), but this is not required for admin functionality.
 
 ## 📁 File Structure
 
