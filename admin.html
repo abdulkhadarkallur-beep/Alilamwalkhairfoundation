@@ -122,6 +122,7 @@
                                     <option value="Medical">Medical</option>
                                     <option value="Homeless Support">Homeless Support</option>
                                     <option value="Education">Education</option>
+                                    <option value="Education/Charitable">Education/Charitable</option>
                                 </select>
                             </div>
                             <div class="mb-6">
@@ -639,6 +640,24 @@
 
 
         // Add new case button
+                const saveCaseBtn = document.getElementById('save-case-btn');
+                let imageLoading = false;
+                document.getElementById('case-image-upload').addEventListener('change', function(e) {
+                    const file = e.target.files && e.target.files[0];
+                    if (!file) return;
+                    imageLoading = true;
+                    saveCaseBtn.disabled = true;
+                    const reader = new FileReader();
+                    reader.onload = function(evt) {
+                        const dataUrl = evt.target.result;
+                        document.getElementById('case-image').value = dataUrl;
+                        document.getElementById('case-image-preview').src = dataUrl;
+                        document.getElementById('case-image-preview').style.display = 'block';
+                        imageLoading = false;
+                        saveCaseBtn.disabled = false;
+                    };
+                    reader.readAsDataURL(file);
+                });
         document.getElementById('add-case-btn').addEventListener('click', function() {
             editingCaseId = null;
             document.getElementById('form-title').textContent = 'Add New Case';
@@ -718,6 +737,30 @@
                 amountRaised: parseInt(document.getElementById('case-amount-raised').value, 10) || 0,
                 urgency: document.getElementById('case-urgency').value
             };
+
+            // If image is loading, wait for it to finish then retry save
+            if (imageLoading) {
+                alert('Please wait for the image to finish loading.');
+                return;
+            }
+
+            // If image is not set but file is selected, try to read it now
+            if (!newCase.image) {
+                const fileInput = document.getElementById('case-image-upload');
+                const file = fileInput.files && fileInput.files[0];
+                if (file) {
+                    saveCaseBtn.disabled = true;
+                    const reader = new FileReader();
+                    reader.onload = function(evt) {
+                        document.getElementById('case-image').value = evt.target.result;
+                        saveCaseBtn.disabled = false;
+                        // Retry save after image loads
+                        saveCaseBtn.click();
+                    };
+                    reader.readAsDataURL(file);
+                    return;
+                }
+            }
 
             // Validation
             if (!newCase.name || !newCase.description || !newCase.image) {

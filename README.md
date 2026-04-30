@@ -34,7 +34,7 @@ All admin panel changes (cases, jobs, home content, etc.) are saved in your brow
 - Data is only available in the browser/device where you made the changes.
 - Other users or devices will not see your changes unless you export/import data manually.
 
-If you want to test the site locally, you can still use a local server (e.g., `python -m http.server 8000`), but this is not required for admin functionality.
+If you want to test the site locally, you can still use a local server (e.g., ), but this is not required for admin functionality.`python -m http.server 8000`
 
 ## 📁 File Structure
 
